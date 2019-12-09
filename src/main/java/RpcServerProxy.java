@@ -12,16 +12,27 @@ public class RpcServerProxy {
 
         ServerSocket serverSocket;
         ExecutorService executorService = Executors.newFixedThreadPool(10);
-
+        Socket socket = null;
         try {
-            Socket socket;
+
             serverSocket = new ServerSocket(port);
+            System.out.println("等待client连接。。");
             while (true){
                 socket = serverSocket.accept();
-                executorService.execute(new ProcessHandler(socket,port));
+                System.out.println("client 已连接。");
+                executorService.execute(new ProcessHandler(socket,service));
+                System.out.println("请求结束");
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if(null != socket){
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
     }

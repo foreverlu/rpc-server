@@ -9,10 +9,6 @@ public class RPCRequest implements Serializable {
 
     private Object[] parameters;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getClassName() {
         return className;
     }
